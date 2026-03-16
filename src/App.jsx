@@ -356,8 +356,8 @@ const App = () => {
                     className="flex items-center gap-6 bg-white p-6 rounded-[2rem] shadow-sm border border-gray-50 hover:border-primary/20 transition-all cursor-pointer group"
                     onClick={() => handleCategoryClick(cat.id)}
                   >
-                    <div className="w-16 h-16 bg-primary/5 text-primary rounded-2xl flex items-center justify-center transition-all group-hover:bg-primary group-hover:text-white group-hover:rotate-6 shadow-sm">
-                      {cat.icon}
+                    <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-sm flex-shrink-0">
+                      <img src={cat.img} alt={cat.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     </div>
                     <div className="flex-1">
                       <h3 className="font-black text-primary uppercase italic tracking-widest text-xs mb-1">{cat.name}</h3>
