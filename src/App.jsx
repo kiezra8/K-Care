@@ -309,22 +309,22 @@ const App = () => {
                   <button onClick={() => setActiveTab('profs')} className="text-xs font-black text-secondary uppercase tracking-[0.1em]">View 30+</button>
                 </div>
 
-                <div className="flex overflow-x-auto gap-4 pb-4 no-scrollbar -mx-6 px-6">
+                <div className="grid grid-cols-2 gap-x-4 gap-y-8">
                   {topProfs.map(prof => (
                     <motion.div 
                       key={prof.id} 
                       whileTap={{ scale: 0.95 }}
-                      className="min-w-[140px] group cursor-pointer"
+                      className="group cursor-pointer"
                       onClick={() => setSelectedProf(prof)}
                     >
                       <div className="relative aspect-[4/5] rounded-3xl overflow-hidden mb-2 shadow-lg">
-                        <img src={prof.img} alt={prof.name} className="w-full h-full object-cover" />
+                        <img src={prof.img} alt={prof.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                         <div className="absolute top-2 right-2 bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-lg text-[10px] font-black text-white flex items-center gap-1">
                           <Star size={8} fill="white" /> {prof.rating}
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
                       </div>
-                      <h3 className="text-sm font-bold text-primary truncate leading-tight uppercase italic">{prof.name}</h3>
+                      <h3 className="text-sm font-black text-primary truncate leading-tight uppercase italic">{prof.name}</h3>
                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{prof.title}</p>
                     </motion.div>
                   ))}
