@@ -14,7 +14,9 @@ import {
   Activity,
   Clipboard,
   ShieldCheck,
-  Award
+  Award,
+  Star,
+  MapPin
 } from 'lucide-react';
 
 // Configuration
@@ -32,27 +34,27 @@ const PIN_IMAGES = [
 const SLIDES = [
   {
     title: "Premium Home Healthcare",
-    desc: "Experience professional medical care in the comfort of your sanctuary.",
+    desc: "Professional medical care in your sanctuary.",
     img: PIN_IMAGES[0]
   },
   {
     title: "Maternal Excellence",
-    desc: "Compassionate support for mothers and newborns from day one.",
+    desc: "Compassionate support for new mothers.",
     img: PIN_IMAGES[1]
   },
   {
     title: "Expert Recovery",
-    desc: "Advanced physiotherapy to get you back to your best life.",
+    desc: "Advanced physiotherapy at your home.",
     img: PIN_IMAGES[2]
   }
 ];
 
 const CATEGORIES = [
-  { id: 'bedside', name: 'Bedside Nursing', icon: <Heart />, img: PIN_IMAGES[3] },
-  { id: 'maternity', name: 'Maternity & Post Op Mothers', icon: <Activity />, img: PIN_IMAGES[1] },
-  { id: 'physio', name: 'Physiotherapy', icon: <Stethoscope />, img: PIN_IMAGES[2] },
-  { id: 'childcare', name: 'Child Home Care', icon: <Award />, img: PIN_IMAGES[0] },
-  { id: 'lab', name: 'Lab Home Services', icon: <Clipboard />, img: 'https://images.unsplash.com/photo-1579152433910-53ed7170881b?w=800' }
+  { id: 'bedside', name: 'Bedside Nursing', icon: <Heart size={28} />, img: PIN_IMAGES[3] },
+  { id: 'maternity', name: 'Mothers & Newborns', icon: <Activity size={28} />, img: PIN_IMAGES[1] },
+  { id: 'physio', name: 'Physiotherapy', icon: <Stethoscope size={28} />, img: PIN_IMAGES[2] },
+  { id: 'childcare', name: 'Child Home Care', icon: <Award size={28} />, img: PIN_IMAGES[0] },
+  { id: 'lab', name: 'Lab Home Services', icon: <Clipboard size={28} />, img: 'https://images.unsplash.com/photo-1579152433910-53ed7170881b?w=800' }
 ];
 
 // Generate 30 Professionals
@@ -92,100 +94,94 @@ const PROFESSIONALS_RAW = [
 const PROFESSIONALS = PROFESSIONALS_RAW.map((p, i) => ({
   ...p,
   id: i + 1,
-  rating: (4.5 + Math.random() * 0.5).toFixed(1),
-  reviews: Math.floor(Math.random() * 200) + 20,
-  img: `https://i.pravatar.cc/300?u=${p.name}`,
-  cv: `${p.name} is a highly qualified ${p.title} with extensive training in ${CATEGORIES.find(c => c.id === p.cat).name}. Over ${10 + i % 5} years of dedicated service in various healthcare facilities across East Africa.`
+  rating: (4.7 + Math.random() * 0.3).toFixed(1),
+  reviews: Math.floor(Math.random() * 200) + 50,
+  img: `https://i.pravatar.cc/300?u=${p.name.replace(/\s/g, '')}`,
+  cv: `${p.name} is a premier ${p.title} at K'Care, specializing in ${CATEGORIES.find(c => c.id === p.cat)?.name || 'General Care'}. With a commitment to excellence and over ${12 + (i % 8)} years of clinical experience, they provide unparalleled home-based medical support.`
 }));
 
 // Components
 const ContactModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
   return (
-    <div className="modal" style={{ display: 'block' }}>
+    <div className="fixed inset-0 z-[2000] flex items-end justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
       <motion.div 
-        className="modal-content"
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
-        style={{ minHeight: 'auto', borderTopLeftRadius: '32px', borderTopRightRadius: '32px' }}
+        className="bg-white w-full max-w-[480px] rounded-t-[3rem] p-8 pb-12 text-center"
+        onClick={e => e.stopPropagation()}
       >
-        <div className="p-8 text-center">
-          <div className="modal-close" onClick={onClose} style={{ top: '20px', left: 'auto', right: '20px' }}>
-            <X size={20} />
-          </div>
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary">
-            <MessageCircle size={32} />
-          </div>
-          <h2 className="text-2xl font-bold mb-2">Connect with K'Care</h2>
-          <p className="text-gray-500 mb-8">Our support team is available 24/7 for your emergencies.</p>
-          
-          <div className="space-y-4">
-            <a href={`https://wa.me/${CONTACT_NUMBER.replace('+', '')}`} className="contact-btn whatsapp-btn w-full py-4 text-lg">
-              <MessageCircle size={24} /> WhatsApp Support
-            </a>
-            <a href={`tel:${CONTACT_NUMBER}`} className="contact-btn call-btn w-full py-4 text-lg">
-              <Phone size={24} /> Call Direct
-            </a>
-          </div>
-          <p className="mt-6 text-xs text-gray-400 font-medium tracking-widest uppercase">Emergency Response: {CONTACT_NUMBER}</p>
+        <div className="w-16 h-1 bg-gray-200 rounded-full mx-auto mb-8" />
+        <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary">
+          <MessageCircle size={40} />
         </div>
+        <h2 className="text-2xl font-black text-primary uppercase italic mb-2">Connect to K'Care</h2>
+        <p className="text-gray-500 text-sm mb-10">Professional healthcare is just a tap away.</p>
+        
+        <div className="space-y-4">
+          <a href={`https://wa.me/${CONTACT_NUMBER.replace('+', '')}`} className="bg-[#25D366] text-white w-full py-5 rounded-2xl flex items-center justify-center gap-3 font-bold text-lg shadow-lg hover:brightness-110 transition-all">
+            <MessageCircle size={24} /> WhatsApp Us
+          </a>
+          <a href={`tel:${CONTACT_NUMBER}`} className="bg-primary text-white w-full py-5 rounded-2xl flex items-center justify-center gap-3 font-bold text-lg shadow-lg hover:brightness-110 transition-all">
+            <Phone size={24} /> Call Specialist
+          </a>
+        </div>
+        <p className="mt-10 text-[10px] text-gray-400 font-bold tracking-[0.3em] uppercase">Emergency Response: {CONTACT_NUMBER}</p>
       </motion.div>
     </div>
   );
 };
 
-const CVModal = ({ isOpen, onClose, prof }) => {
-  if (!isOpen || !prof) return null;
+const CVModal = ({ prof, onClose }) => {
+  if (!prof) return null;
   return (
-    <div className="modal" style={{ display: 'block' }}>
+    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-md" onClick={onClose}>
       <motion.div 
-        className="modal-content"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
+        className="bg-white w-[90%] max-w-[420px] rounded-[2.5rem] overflow-hidden shadow-2xl"
+        onClick={e => e.stopPropagation()}
       >
-        <div className="modal-header">
-          <img src={prof.img} alt={prof.name} className="modal-image" />
-          <div className="modal-close" onClick={onClose}>
-            <X size={20} />
+        <div className="relative h-[300px]">
+          <button className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white" onClick={onClose}>
+            <X size={24} />
+          </button>
+          <img src={prof.img} alt={prof.name} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
+          <div className="absolute bottom-6 left-6 text-white">
+            <h2 className="text-3xl font-black uppercase italic tracking-tighter">{prof.name}</h2>
+            <p className="text-secondary font-bold flex items-center gap-2">
+              <ShieldCheck size={18} /> {prof.title}
+            </p>
           </div>
         </div>
-        <div className="modal-body">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h2 className="modal-name">{prof.name}</h2>
-              <p className="modal-profession text-secondary flex items-center gap-2">
-                <ShieldCheck size={16} /> {prof.title}
-              </p>
+        <div className="p-8">
+          <div className="flex gap-4 mb-8">
+            <div className="flex-1 bg-gray-50 p-4 rounded-2xl text-center">
+              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Rating</p>
+              <p className="text-xl font-black text-primary italic">⭐ {prof.rating}</p>
             </div>
-            <div className="bg-primary/5 px-3 py-1 rounded-full text-primary font-bold text-sm">
-              ⭐ {prof.rating}
+            <div className="flex-1 bg-gray-50 p-4 rounded-2xl text-center">
+              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Experience</p>
+              <p className="text-xl font-black text-primary italic">12+ Yrs</p>
             </div>
           </div>
           
-          <div className="cv-section">
-            <h3 className="flex items-center gap-2 text-primary font-bold mb-3">
-              <Award size={18} /> Professional Summary
+          <div className="mb-10">
+            <h3 className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-xs mb-4">
+              <Award size={16} /> Professional Profile
             </h3>
-            <p className="text-gray-600 leading-relaxed text-sm">{prof.cv}</p>
+            <p className="text-gray-600 leading-relaxed text-sm font-medium">{prof.cv}</p>
           </div>
 
-          <div className="cv-section">
-            <h3 className="text-primary font-bold mb-3">Certifications</h3>
-            <div className="flex flex-wrap gap-2">
-              <span className="bg-gray-100 px-3 py-1 rounded-md text-xs font-medium">Bachelors of Nursing</span>
-              <span className="bg-gray-100 px-3 py-1 rounded-md text-xs font-medium">Critical Care Certified</span>
-              <span className="bg-gray-100 px-3 py-1 rounded-md text-xs font-medium">AHA BLS/ACLS</span>
-            </div>
-          </div>
-
-          <div className="contact-section">
-            <a href={`https://wa.me/${CONTACT_NUMBER.replace('+', '')}`} className="contact-btn whatsapp-btn">
-              <MessageCircle size={18} /> WhatsApp
+          <div className="flex gap-3">
+            <a href={`https://wa.me/${CONTACT_NUMBER.replace('+', '')}`} className="flex-1 bg-[#25D366] text-white py-4 rounded-2xl flex items-center justify-center gap-2 font-bold shadow-md">
+              <MessageCircle size={20} /> WhatsApp
             </a>
-            <a href={`tel:${CONTACT_NUMBER}`} className="contact-btn call-btn">
-              <Phone size={18} /> Book Now
+            <a href={`tel:${CONTACT_NUMBER}`} className="flex-1 bg-primary text-white py-4 rounded-2xl flex items-center justify-center gap-2 font-bold shadow-md">
+              <Phone size={20} /> Book
             </a>
           </div>
         </div>
@@ -200,51 +196,52 @@ const HeroSlider = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent(prev => (prev + 1) % SLIDES.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="hero-slider" style={{ height: '240px' }}>
-      {SLIDES.map((slide, idx) => (
+    <div className="relative h-[240px] w-full overflow-hidden mb-8">
+      <AnimatePresence mode='wait'>
         <motion.div 
-          key={idx}
-          className={`slide ${idx === current ? 'active' : ''}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: idx === current ? 1 : 0 }}
-          style={{ backgroundImage: `url(${slide.img})`, margin: 0, borderRadius: 0 }}
+          key={current}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0 bg-cover bg-center flex items-end"
+          style={{ backgroundImage: `url(${SLIDES[current].img})` }}
         >
-          <div className="slide-content">
-            <motion.h2
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: idx === current ? 0 : 20, opacity: idx === current ? 1 : 0 }}
-            >
-              {slide.title}
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
+          <div className="relative p-6 pb-12 text-white">
+            <motion.h2 initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="text-2xl font-black uppercase italic tracking-tighter">
+              {SLIDES[current].title}
             </motion.h2>
-            <motion.p
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: idx === current ? 0 : 20, opacity: idx === current ? 0.9 : 0 }}
-            >
-              {slide.desc}
+            <motion.p initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }} className="text-sm opacity-90 font-medium">
+              {SLIDES[current].desc}
             </motion.p>
           </div>
         </motion.div>
-      ))}
-      <div className="slide-indicators">
+      </AnimatePresence>
+      <div className="absolute bottom-4 left-6 flex gap-2 z-10">
         {SLIDES.map((_, idx) => (
-          <span key={idx} className={`indicator ${idx === current ? 'active' : ''}`} />
+          <div key={idx} className={`h-1 rounded-full transition-all duration-300 ${idx === current ? 'w-8 bg-secondary' : 'w-2 bg-white/50'}`} />
         ))}
       </div>
     </div>
   );
 };
 
-// Main Component
+// Main App
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [filter, setFilter] = useState(null);
   const [selectedProf, setSelectedProf] = useState(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeTab]);
 
   const handleCategoryClick = (catId) => {
     setFilter(catId);
@@ -255,50 +252,93 @@ const App = () => {
     ? PROFESSIONALS.filter(p => p.cat === filter)
     : PROFESSIONALS;
 
+  const topProfs = PROFESSIONALS.slice(0, 8);
+
   return (
-    <div className="bg-white min-h-screen pb-24">
-      {/* Header */}
-      <header className="header sticky top-0 z-[100]">
-        <div className="header-top">
-          <div className="logo cursor-pointer" onClick={() => {setActiveTab('home'); setFilter(null);}}>
-            K'<span>Care</span>
-          </div>
-          <div className="flex gap-4 text-white opacity-80">
-            <Search size={20} />
-          </div>
+    <div className="max-w-[480px] mx-auto bg-white min-h-screen pb-28 relative shadow-xl">
+      {/* Premium Header */}
+      <header className="sticky top-0 z-[1000] bg-primary/95 backdrop-blur-md text-white px-6 py-4 flex justify-between items-center shadow-lg">
+        <div className="flex flex-col">
+          <span className="text-2xl font-black italic tracking-tighter leading-none cursor-pointer" onClick={() => {setActiveTab('home'); setFilter(null);}}>
+            K'<span className="text-secondary">Care</span>
+          </span>
+          <span className="text-[8px] font-bold uppercase tracking-[0.3em] opacity-60">Premium Healthcare</span>
+        </div>
+        <div className="flex gap-4">
+          <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+            <Search size={18} />
+          </button>
         </div>
       </header>
 
-      {/* Main Container */}
+      {/* Main Content */}
       <main>
         <AnimatePresence mode="wait">
           {activeTab === 'home' && (
             <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <HeroSlider />
               
-              <div className="section-title">Healthcare Categories</div>
-              <div className="categories-grid">
-                {CATEGORIES.map(cat => (
-                  <motion.div 
-                    key={cat.id} 
-                    whileTap={{ scale: 0.95 }}
-                    className="category-card" 
-                    style={{ backgroundImage: `url(${cat.img})` }}
-                    onClick={() => handleCategoryClick(cat.id)}
-                  >
-                    <div className="category-name">{cat.name}</div>
-                  </motion.div>
-                ))}
+              <div className="px-6 mb-8">
+                <div className="flex justify-between items-end mb-4">
+                  <h2 className="text-xl font-black text-primary uppercase italic tracking-tighter">Our Services</h2>
+                  <button onClick={() => setActiveTab('services')} className="text-xs font-black text-secondary uppercase tracking-[0.1em]">Explore All</button>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3">
+                  {CATEGORIES.slice(0, 4).map(cat => (
+                    <motion.div 
+                      key={cat.id} 
+                      whileTap={{ scale: 0.96 }}
+                      className="relative h-[160px] rounded-[2rem] overflow-hidden shadow-md group border-2 border-transparent active:border-secondary transition-all"
+                      onClick={() => handleCategoryClick(cat.id)}
+                    >
+                      <img src={cat.img} alt={cat.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <span className="text-white font-bold text-xs uppercase tracking-wider block">{cat.name}</span>
+                        <div className="h-0.5 w-6 bg-secondary mt-1" />
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
 
-              <div className="p-4 mx-4 mt-8 bg-primary/5 rounded-2xl border border-primary/10">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center">
-                    <ShieldCheck />
+              <div className="px-6 mb-12">
+                <div className="flex justify-between items-end mb-4">
+                  <h2 className="text-xl font-black text-primary uppercase italic tracking-tighter">Featured Staff</h2>
+                  <button onClick={() => setActiveTab('profs')} className="text-xs font-black text-secondary uppercase tracking-[0.1em]">View 30+</button>
+                </div>
+
+                <div className="flex overflow-x-auto gap-4 pb-4 no-scrollbar -mx-6 px-6">
+                  {topProfs.map(prof => (
+                    <motion.div 
+                      key={prof.id} 
+                      whileTap={{ scale: 0.95 }}
+                      className="min-w-[140px] group cursor-pointer"
+                      onClick={() => setSelectedProf(prof)}
+                    >
+                      <div className="relative aspect-[4/5] rounded-3xl overflow-hidden mb-2 shadow-lg">
+                        <img src={prof.img} alt={prof.name} className="w-full h-full object-cover" />
+                        <div className="absolute top-2 right-2 bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-lg text-[10px] font-black text-white flex items-center gap-1">
+                          <Star size={8} fill="white" /> {prof.rating}
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
+                      </div>
+                      <h3 className="text-sm font-bold text-primary truncate leading-tight uppercase italic">{prof.name}</h3>
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{prof.title}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="px-6 pb-12">
+                <div className="bg-primary/5 p-8 rounded-[3rem] border border-primary/10 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 p-8 opacity-10">
+                    <ShieldCheck size={100} />
                   </div>
-                  <div>
-                    <h3 className="font-bold text-primary">Certified & Verified</h3>
-                    <p className="text-xs text-gray-500">Every provider undergoes strict background checks.</p>
+                  <div className="relative z-10">
+                    <h3 className="text-2xl font-black text-primary uppercase italic tracking-tighter mb-2">Safe & Trusted</h3>
+                    <p className="text-sm text-gray-500 font-medium leading-relaxed">Every professional at K'Care is fully vetted, licensed, and insured to ensure your absolute safety and peace of mind.</p>
                   </div>
                 </div>
               </div>
@@ -306,60 +346,75 @@ const App = () => {
           )}
 
           {activeTab === 'services' && (
-            <motion.div key="services" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
-              <div className="section-title">All Services</div>
-              <div className="px-4 space-y-4">
+            <motion.div key="services" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="p-6">
+              <h2 className="text-3xl font-black text-primary uppercase italic tracking-tighter mb-8 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Our Expertise</h2>
+              <div className="space-y-4">
                 {CATEGORIES.map(cat => (
-                  <div 
+                  <motion.div 
                     key={cat.id} 
-                    className="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:border-primary transition-all cursor-pointer"
+                    whileTap={{ scale: 0.97 }}
+                    className="flex items-center gap-6 bg-white p-6 rounded-[2rem] shadow-sm border border-gray-50 hover:border-primary/20 transition-all cursor-pointer group"
                     onClick={() => handleCategoryClick(cat.id)}
                   >
-                    <div className="w-14 h-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
+                    <div className="w-16 h-16 bg-primary/5 text-primary rounded-2xl flex items-center justify-center transition-all group-hover:bg-primary group-hover:text-white group-hover:rotate-6 shadow-sm">
                       {cat.icon}
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-bold text-gray-800">{cat.name}</h3>
-                      <p className="text-xs text-gray-500">{PROFESSIONALS.filter(p => p.cat === cat.id).length} Specialists available</p>
+                      <h3 className="font-black text-primary uppercase italic tracking-widest text-xs mb-1">{cat.name}</h3>
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-none">
+                        {PROFESSIONALS.filter(p => p.cat === cat.id).length} Active Providers
+                      </p>
                     </div>
-                    <ChevronRight size={18} className="text-gray-300" />
-                  </div>
+                    <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 group-hover:text-secondary group-hover:translate-x-1 transition-all">
+                      <ChevronRight size={20} />
+                    </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
           )}
 
           {activeTab === 'profs' && (
-            <motion.div key="profs" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.05 }}>
-              <div className="flex items-center justify-between px-4 mt-6">
-                <div className="section-title m-0">
-                  {filter ? CATEGORIES.find(c => c.id === filter).name : "All Professionals"}
+            <motion.div key="profs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h2 className="text-3xl font-black text-primary uppercase italic tracking-tighter">
+                    {filter ? CATEGORIES.find(c => c.id === filter)?.name : "Our Team"}
+                  </h2>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-1">{filteredProfs.length} Certified Experts</p>
                 </div>
                 {filter && (
-                  <button onClick={() => setFilter(null)} className="text-xs font-bold text-secondary uppercase tracking-wider">
-                    Show All
+                  <button onClick={() => setFilter(null)} className="w-10 h-10 bg-secondary/10 text-secondary rounded-full flex items-center justify-center">
+                    <X size={18} />
                   </button>
                 )}
               </div>
 
-              <div className="professionals-list mt-4">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-8">
                 {filteredProfs.map(prof => (
-                  <div key={prof.id} className="professional-card" onClick={() => setSelectedProf(prof)}>
-                    <div className="prof-image-container">
-                      <img src={prof.img} alt={prof.name} className="prof-image" />
-                      <div className="prof-overlay">
-                        <div className="flex justify-between items-end">
-                          <div>
-                            <h3 className="prof-name">{prof.name}</h3>
-                            <p className="prof-profession">{prof.title}</p>
-                          </div>
-                          <div className="bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg text-xs font-bold">
-                            ⭐ {prof.rating}
-                          </div>
+                  <motion.div 
+                    key={prof.id} 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    whileTap={{ scale: 0.96 }}
+                    className="cursor-pointer"
+                    onClick={() => setSelectedProf(prof)}
+                  >
+                    <div className="relative aspect-[3/4] rounded-[2.5rem] overflow-hidden mb-3 shadow-lg group">
+                      <img src={prof.img} alt={prof.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-80" />
+                      <div className="absolute top-3 right-3 bg-white/20 backdrop-blur-md px-2 py-1 rounded-xl text-[10px] font-black text-white flex items-center gap-1">
+                        <Star size={10} fill="white" /> {prof.rating}
+                      </div>
+                      <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white">
+                        <div className="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center">
+                          <ChevronRight size={14} />
                         </div>
                       </div>
                     </div>
-                  </div>
+                    <h3 className="text-sm font-black text-primary uppercase italic tracking-tight">{prof.name}</h3>
+                    <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">{prof.title}</p>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -367,33 +422,36 @@ const App = () => {
         </AnimatePresence>
       </main>
 
+      {/* Navigation */}
+      <nav className="fixed bottom-0 inset-x-0 mx-auto max-w-[480px] bg-white/90 backdrop-blur-2xl border-t border-gray-50 flex justify-between items-center h-20 px-10 pb-2 shadow-[0_-20px_50px_rgba(0,0,0,0.05)] z-[1100]">
+        <button className={`flex flex-col items-center gap-1.5 transition-all ${activeTab === 'home' ? 'text-primary' : 'text-gray-300'}`} onClick={() => {setActiveTab('home'); setFilter(null);}}>
+          <Home size={22} className={activeTab === 'home' ? 'scale-110' : ''} />
+          <span className="text-[9px] font-black uppercase tracking-widest">Home</span>
+          {activeTab === 'home' && <motion.div layoutId="navDot" className="w-1 h-1 bg-secondary rounded-full" />}
+        </button>
+        <button className={`flex flex-col items-center gap-1.5 transition-all ${activeTab === 'services' ? 'text-primary' : 'text-gray-300'}`} onClick={() => setActiveTab('services')}>
+          <Grid size={22} className={activeTab === 'services' ? 'scale-110' : ''} />
+          <span className="text-[9px] font-black uppercase tracking-widest">Services</span>
+          {activeTab === 'services' && <motion.div layoutId="navDot" className="w-1 h-1 bg-secondary rounded-full" />}
+        </button>
+        <button className={`flex flex-col items-center gap-1.5 transition-all ${activeTab === 'profs' ? 'text-primary' : 'text-gray-300'}`} onClick={() => {setActiveTab('profs'); setFilter(null);}}>
+          <Users size={22} className={activeTab === 'profs' ? 'scale-110' : ''} />
+          <span className="text-[9px] font-black uppercase tracking-widest">Experts</span>
+          {activeTab === 'profs' && <motion.div layoutId="navDot" className="w-1 h-1 bg-secondary rounded-full" />}
+        </button>
+        <button className="flex flex-col items-center gap-1.5 text-secondary relative" onClick={() => setIsChatOpen(true)}>
+          <div className="w-14 h-14 bg-secondary rounded-full flex items-center justify-center text-white -mt-12 shadow-2xl shadow-secondary/50 ring-4 ring-white active:scale-90 transition-transform">
+            <MessageCircle size={28} fill="currentColor" />
+          </div>
+          <span className="text-[9px] font-black uppercase tracking-widest">Chat</span>
+        </button>
+      </nav>
+
       {/* Modals */}
       <AnimatePresence>
-        {selectedProf && <CVModal isOpen={!!selectedProf} onClose={() => setSelectedProf(null)} prof={selectedProf} />}
+        {selectedProf && <CVModal prof={selectedProf} onClose={() => setSelectedProf(null)} />}
         {isChatOpen && <ContactModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />}
       </AnimatePresence>
-
-      {/* Bottom Nav */}
-      <nav className="bottom-nav">
-        <div className={`nav-item ${activeTab === 'home' ? 'active' : ''}`} onClick={() => {setActiveTab('home'); setFilter(null);}}>
-          <Home size={22} />
-          <span>Home</span>
-        </div>
-        <div className={`nav-item ${activeTab === 'services' ? 'active' : ''}`} onClick={() => setActiveTab('services')}>
-          <Grid size={22} />
-          <span>Services</span>
-        </div>
-        <div className={`nav-item ${activeTab === 'profs' ? 'active' : ''}`} onClick={() => {setActiveTab('profs'); setFilter(null);}}>
-          <Users size={22} />
-          <span>Professionals</span>
-        </div>
-        <div className="nav-item" onClick={() => setIsChatOpen(true)}>
-          <div className="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center text-secondary">
-            <MessageCircle size={22} />
-          </div>
-          <span>Chat</span>
-        </div>
-      </nav>
     </div>
   );
 };
