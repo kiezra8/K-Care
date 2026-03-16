@@ -201,31 +201,53 @@ const HeroSlider = () => {
   }, []);
 
   return (
-    <div className="relative h-[240px] w-full overflow-hidden mb-8">
+    <div className="relative h-[450px] w-full overflow-hidden mb-8 bg-black">
       <AnimatePresence mode='wait'>
         <motion.div 
           key={current}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.8 }}
-          className="absolute inset-0 bg-cover bg-top flex items-end"
-          style={{ backgroundImage: `url(${SLIDES[current].img})` }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-0"
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
-          <div className="relative p-6 pb-12 text-white">
-            <motion.h2 initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="text-2xl font-black uppercase italic tracking-tighter">
+          {/* Blurred Background to fill space */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center blur-2xl opacity-40 scale-110"
+            style={{ backgroundImage: `url(${SLIDES[current].img})` }}
+          />
+          
+          {/* Main Image - Contained to show fully */}
+          <div 
+            className="absolute inset-0 bg-contain bg-center bg-no-repeat z-10"
+            style={{ backgroundImage: `url(${SLIDES[current].img})` }}
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent z-20" />
+          
+          <div className="absolute bottom-0 left-0 right-0 p-8 pb-14 z-30 text-white">
+            <motion.h2 
+              initial={{ y: 20, opacity: 0 }} 
+              animate={{ y: 0, opacity: 1 }} 
+              transition={{ delay: 0.3 }}
+              className="text-3xl font-black uppercase italic tracking-tighter leading-tight mb-2 drop-shadow-lg"
+            >
               {SLIDES[current].title}
             </motion.h2>
-            <motion.p initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }} className="text-sm opacity-90 font-medium">
+            <motion.p 
+              initial={{ y: 20, opacity: 0 }} 
+              animate={{ y: 0, opacity: 1 }} 
+              transition={{ delay: 0.4 }}
+              className="text-sm opacity-90 font-medium drop-shadow"
+            >
               {SLIDES[current].desc}
             </motion.p>
           </div>
         </motion.div>
       </AnimatePresence>
-      <div className="absolute bottom-4 left-6 flex gap-2 z-10">
+      <div className="absolute bottom-6 left-8 flex gap-3 z-40">
         {SLIDES.map((_, idx) => (
-          <div key={idx} className={`h-1 rounded-full transition-all duration-300 ${idx === current ? 'w-8 bg-secondary' : 'w-2 bg-white/50'}`} />
+          <div key={idx} className={`h-1.5 rounded-full transition-all duration-500 ${idx === current ? 'w-10 bg-secondary shadow-lg shadow-secondary/50' : 'w-3 bg-white/30'}`} />
         ))}
       </div>
     </div>
