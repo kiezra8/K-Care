@@ -201,53 +201,42 @@ const HeroSlider = () => {
   }, []);
 
   return (
-    <div className="relative h-[450px] w-full overflow-hidden mb-8 bg-black">
+    <div className="relative h-[280px] w-full overflow-hidden mb-6 bg-gray-100">
       <AnimatePresence mode='wait'>
         <motion.div 
           key={current}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0"
+          initial={{ x: '20%', opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: '-20%', opacity: 0 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="absolute inset-0 bg-cover bg-[center_25%]"
+          style={{ backgroundImage: `url(${SLIDES[current].img})` }}
         >
-          {/* Blurred Background to fill space */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center blur-2xl opacity-40 scale-110"
-            style={{ backgroundImage: `url(${SLIDES[current].img})` }}
-          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
           
-          {/* Main Image - Contained to show fully */}
-          <div 
-            className="absolute inset-0 bg-contain bg-center bg-no-repeat z-10"
-            style={{ backgroundImage: `url(${SLIDES[current].img})` }}
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent z-20" />
-          
-          <div className="absolute bottom-0 left-0 right-0 p-8 pb-14 z-30 text-white">
+          <div className="absolute bottom-4 left-6 right-6 z-20 text-white">
             <motion.h2 
-              initial={{ y: 20, opacity: 0 }} 
+              initial={{ y: 10, opacity: 0 }} 
               animate={{ y: 0, opacity: 1 }} 
-              transition={{ delay: 0.3 }}
-              className="text-3xl font-black uppercase italic tracking-tighter leading-tight mb-2 drop-shadow-lg"
+              transition={{ delay: 0.1 }}
+              className="text-xl font-black uppercase italic tracking-tighter"
             >
               {SLIDES[current].title}
             </motion.h2>
             <motion.p 
-              initial={{ y: 20, opacity: 0 }} 
+              initial={{ y: 5, opacity: 0 }} 
               animate={{ y: 0, opacity: 1 }} 
-              transition={{ delay: 0.4 }}
-              className="text-sm opacity-90 font-medium drop-shadow"
+              transition={{ delay: 0.2 }}
+              className="text-[10px] uppercase font-bold tracking-widest opacity-80"
             >
               {SLIDES[current].desc}
             </motion.p>
           </div>
         </motion.div>
       </AnimatePresence>
-      <div className="absolute bottom-6 left-8 flex gap-3 z-40">
+      <div className="absolute bottom-4 right-6 flex gap-1.5 z-30">
         {SLIDES.map((_, idx) => (
-          <div key={idx} className={`h-1.5 rounded-full transition-all duration-500 ${idx === current ? 'w-10 bg-secondary shadow-lg shadow-secondary/50' : 'w-3 bg-white/30'}`} />
+          <div key={idx} className={`h-1 rounded-full transition-all duration-300 ${idx === current ? 'w-6 bg-white' : 'w-1 bg-white/40'}`} />
         ))}
       </div>
     </div>
@@ -347,7 +336,10 @@ const App = () => {
                         <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
                       </div>
                       <h3 className="text-sm font-black text-primary truncate leading-tight uppercase italic">{prof.name}</h3>
-                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{prof.title}</p>
+                      <div className="flex justify-between items-center mt-1">
+                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{prof.title}</p>
+                        <span className="text-[9px] font-black text-secondary uppercase border-b border-secondary/30">About</span>
+                      </div>
                     </motion.div>
                   ))}
                 </div>
@@ -434,8 +426,11 @@ const App = () => {
                         </div>
                       </div>
                     </div>
-                    <h3 className="text-sm font-black text-primary uppercase italic tracking-tight">{prof.name}</h3>
-                    <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">{prof.title}</p>
+                    <h3 className="text-sm font-black text-primary uppercase italic tracking-tight leading-none mb-1">{prof.name}</h3>
+                    <div className="flex justify-between items-center">
+                      <p className="text-[9px] text-gray-400 font-black uppercase tracking-wider">{prof.title}</p>
+                      <button className="text-[8px] font-black bg-primary/5 text-primary px-2 py-1 rounded-md uppercase tracking-widest">About</button>
+                    </div>
                   </motion.div>
                 ))}
               </div>
