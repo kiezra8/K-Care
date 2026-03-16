@@ -209,10 +209,10 @@ const HeroSlider = () => {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.8 }}
-          className="absolute inset-0 bg-cover bg-center flex items-end"
+          className="absolute inset-0 bg-cover bg-top flex items-end"
           style={{ backgroundImage: `url(${SLIDES[current].img})` }}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
           <div className="relative p-6 pb-12 text-white">
             <motion.h2 initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="text-2xl font-black uppercase italic tracking-tighter">
               {SLIDES[current].title}
@@ -257,16 +257,16 @@ const App = () => {
   return (
     <div className="max-w-[480px] mx-auto bg-white min-h-screen pb-28 relative shadow-xl">
       {/* Premium Header */}
-      <header className="sticky top-0 z-[1000] bg-primary/95 backdrop-blur-md text-white px-6 py-4 flex justify-between items-center shadow-lg">
+      <header className="sticky top-0 z-[1000] bg-primary/95 backdrop-blur-md text-white px-6 py-3 flex justify-between items-center shadow-lg border-b border-white/5">
         <div className="flex flex-col">
-          <span className="text-2xl font-black italic tracking-tighter leading-none cursor-pointer" onClick={() => {setActiveTab('home'); setFilter(null);}}>
+          <span className="text-xl font-black italic tracking-tighter leading-none cursor-pointer" onClick={() => {setActiveTab('home'); setFilter(null);}}>
             K'<span className="text-secondary">Care</span>
           </span>
-          <span className="text-[8px] font-bold uppercase tracking-[0.3em] opacity-60">Premium Healthcare</span>
+          <span className="text-[7px] font-bold uppercase tracking-[0.3em] opacity-60">Premium Healthcare</span>
         </div>
         <div className="flex gap-4">
-          <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-            <Search size={18} />
+          <button className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+            <Search size={16} />
           </button>
         </div>
       </header>
