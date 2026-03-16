@@ -54,7 +54,7 @@ const CATEGORIES = [
   { id: 'maternity', name: 'Mothers & Newborns', icon: <Activity size={28} />, img: PIN_IMAGES[1] },
   { id: 'physio', name: 'Physiotherapy', icon: <Stethoscope size={28} />, img: PIN_IMAGES[2] },
   { id: 'childcare', name: 'Child Home Care', icon: <Award size={28} />, img: PIN_IMAGES[0] },
-  { id: 'lab', name: 'Lab Home Services', icon: <Clipboard size={28} />, img: 'https://images.unsplash.com/photo-1579152433910-53ed7170881b?w=800' }
+  { id: 'lab', name: 'Lab Home Services', icon: <Clipboard size={28} />, img: 'https://i.pinimg.com/736x/11/fe/5e/11fe5ece1b8beb1ebdf56b52f95fa2eb.jpg' }
 ];
 
 // Generate 30 Professionals
@@ -127,7 +127,7 @@ const ContactModal = ({ isOpen, onClose }) => {
             <Phone size={24} /> Call Specialist
           </a>
         </div>
-        <p className="mt-10 text-[10px] text-gray-400 font-bold tracking-[0.3em] uppercase">Emergency Response: {CONTACT_NUMBER}</p>
+        <p className="mt-10 text-[10px] text-gray-400 font-bold tracking-[0.3em] uppercase opacity-0">Emergency Response: {CONTACT_NUMBER}</p>
       </motion.div>
     </div>
   );
@@ -284,12 +284,12 @@ const App = () => {
                   <button onClick={() => setActiveTab('services')} className="text-xs font-black text-secondary uppercase tracking-[0.1em]">Explore All</button>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-3">
-                  {CATEGORIES.slice(0, 4).map(cat => (
+                <div className="grid grid-cols-2 gap-2">
+                  {CATEGORIES.map(cat => (
                     <motion.div 
                       key={cat.id} 
                       whileTap={{ scale: 0.96 }}
-                      className="relative h-[160px] rounded-[2rem] overflow-hidden shadow-md group border-2 border-transparent active:border-secondary transition-all"
+                      className="relative h-[120px] rounded-[1.5rem] overflow-hidden shadow-md group border-2 border-transparent active:border-secondary transition-all"
                       onClick={() => handleCategoryClick(cat.id)}
                     >
                       <img src={cat.img} alt={cat.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
